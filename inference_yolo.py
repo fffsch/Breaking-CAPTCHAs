@@ -10,7 +10,7 @@ import random
 
 TEST_DIR = Path("images/clean_test")
 
-# model = YOLO('C:/Users/fvsch/OneDrive/Documents/Code/NUS/CV/CAPTCHA/runs_v1/detect/captcha_yolo_v87/weights/best.pt') #V1 - YOLOv8n
+# model = YOLO('runs_v1/detect/captcha_yolo_v87/weights/best.pt') #V1 - YOLOv8n
 # model = YOLO('runs/detect/captcha_yolo_v82/weights/best.pt') #V2
 model = YOLO('runs/detect/captcha_yolo_v8/weights/best.pt') #V3 - YOLO11s
 

@@ -17,7 +17,7 @@ from ultralytics import YOLO
 
 if __name__ == '__main__':
     model = YOLO('yolo11s.pt')
-    model.train(data='C:/Users/fvsch/OneDrive/Documents/Code/NUS/CV/CAPTCHA/final_yolo_dataset_v2/data.yaml',
+    model.train(data='final_yolo_dataset_v2/data.yaml',
                 epochs=100,
                 imgsz=640,
                 batch=-1,
