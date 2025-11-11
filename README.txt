@@ -1,0 +1,1 @@
+Adjust absolute path of yaml file in final_yolo_dataset_v2 to one corresponding to your device
