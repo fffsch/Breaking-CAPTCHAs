@@ -10,7 +10,6 @@ import random
 
 TEST_DIR = Path("images/clean_test")
 
-# 1. Load your BEST trained model
 # model = YOLO('C:/Users/fvsch/OneDrive/Documents/Code/NUS/CV/CAPTCHA/runs_v1/detect/captcha_yolo_v87/weights/best.pt') #V1 - YOLOv8n
 # model = YOLO('runs/detect/captcha_yolo_v82/weights/best.pt') #V2
 model = YOLO('runs/detect/captcha_yolo_v8/weights/best.pt') #V3 - YOLO11s
@@ -59,7 +58,6 @@ def get_ground_truth(img_path):
     return img_path.stem.split('-')[0].lower()
 
 def predict_captcha(model, img_path, conf=0.3):
-    """Run YOLO inference and parse results into a string."""
     # Run inference
     results = model.predict(
         source=str(img_path),
@@ -69,7 +67,7 @@ def predict_captcha(model, img_path, conf=0.3):
         device=0
         )
     
-    result = results[0] # We only have one image per prediction call
+    result = results[0]
     
     detected = []
     boxes = result.boxes.cpu().numpy()
@@ -83,19 +81,15 @@ def predict_captcha(model, img_path, conf=0.3):
     detected.sort(key=lambda x: x[0])
     pred_text = "".join([d[1] for d in detected])
     
-    return pred_text, result # CHANGED: Return both text and the YOLO result object
+    return pred_text, result 
 
 # --- NEW: Plotting Function ---
 def plot_ten_samples(samples):
-    """
-    Plots a 2x5 grid of images with their predicted boxes and labels.
-    samples: list of tuples (plotted_img_rgb, gt_text, pred_text)
-    """
     if not samples:
         return
 
     plt.figure(figsize=(15, 6))
-    plt.suptitle("10 random samples (Green = Correct, Red = Incorrect)", fontsize=14)
+    plt.suptitle("10 random samples", fontsize=14)
 
     for i, (img, gt, pred) in enumerate(samples[:10]):
         plt.subplot(2, 5, i + 1)
@@ -135,13 +129,6 @@ def main():
         gt_text = get_ground_truth(img_path)
         # Get both prediction text AND result object
         pred_text, result = predict_captcha(model, img_path, CONF_THRESHOLD)
-
-        # # --- NEW: Collect first 10 samples for plotting ---
-        # if len(plot_samples) < 10:
-        #     # result.plot() returns a BGR numpy array. Convert to RGB for matplotlib.
-        #     plotted_img_bgr = result.plot()
-        #     plotted_img_rgb = cv2.cvtColor(plotted_img_bgr, cv2.COLOR_BGR2RGB)
-        #     plot_samples.append((plotted_img_rgb, gt_text, pred_text))
 
         # --- Accuracy Metrics ---
         if pred_text == gt_text:

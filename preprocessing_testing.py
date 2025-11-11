@@ -9,23 +9,9 @@ img = cv2.imread(str(img_path))
 label_text = img_path.stem.split("-")[0].lower() 
 
 def create_color_mask(image, lower_bgr, upper_bgr):
-    """
-    Creates a binary mask for a BGR color range.
-    
-    Args:
-        image: The source image (numpy array).
-        lower_bgr: A tuple (B, G, R) for the lower color bound.
-        upper_bgr: A tuple (B, G, R) for the upper color bound.
-    
-    Returns:
-        A binary mask (numpy array).
-    """
-    # Define the lower and upper bounds
     lower_bound = np.array(lower_bgr, dtype=np.uint8)
     upper_bound = np.array(upper_bgr, dtype=np.uint8)
-    
-    # Create the mask
-    # cv2.inRange checks if image pixels fall within the bounds.
+
     mask = cv2.inRange(image, lower_bound, upper_bound)
     
     return mask
