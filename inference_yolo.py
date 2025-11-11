@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 import random
 
-TEST_DIR = Path("images/test")
+TEST_DIR = Path("images/clean_test")
 
 # 1. Load your BEST trained model
 # model = YOLO('C:/Users/fvsch/OneDrive/Documents/Code/NUS/CV/CAPTCHA/runs_v1/detect/captcha_yolo_v87/weights/best.pt') #V1 - YOLOv8n
@@ -147,9 +147,9 @@ def main():
         if pred_text == gt_text:
             correct_captchas += 1
             correct_adjusted_captchas += 1
-        for i, j in zip(pred_text, gt_text):
-            if (i == '0' and j == 'o') or (i == 'o' and j == '0'):
-                correct_adjusted_captchas += 1
+        # for i, j in zip(pred_text, gt_text):
+        #     if (i == '0' and j == 'o') or (i == 'o' and j == '0'):
+        #         correct_adjusted_captchas += 1
 
         total_chars += len(gt_text)
         matches = 0
@@ -158,15 +158,15 @@ def main():
             if gt_text[j] == pred_text[j]:
                 matches += 1
                 adjusted_matches += 1
-            elif (gt_text[j] == '0' and pred_text[j] == 'o') or (gt_text[j] == 'o' and pred_text[j] == '0'):
-                adjusted_matches += 1
+            # elif (gt_text[j] == '0' and pred_text[j] == 'o') or (gt_text[j] == 'o' and pred_text[j] == '0'):
+            #     adjusted_matches += 1
         correct_chars += matches
         correct_adjusted_chars += adjusted_matches
         total_captchas += 1
         
 
         # if (i + 1) % 100 == 0:
-        #     print(f"Processed {i+1}/{total_images}...")
+        #     print(f"Processed {i+1}...")
 
     for path in random.sample(test_images,10):
         gt_text = get_ground_truth(path)
@@ -179,9 +179,9 @@ def main():
     elapsed = time.time() - start_time
     print("\n" + "="*40)
     print(f"CAPTCHA Accuracy: {(correct_captchas / total_captchas) * 100:.2f}%")
-    print(f"ADJUSTED CAPTCHA Accuracy: {(correct_adjusted_captchas / total_captchas) * 100:.2f}%")
+    # print(f"ADJUSTED CAPTCHA Accuracy: {(correct_adjusted_captchas / total_captchas) * 100:.2f}%")
     print(f"Character Accuracy: {(correct_chars / total_chars) * 100:.2f}%")
-    print(f"Adjusted Character Accuracy: {(correct_adjusted_chars / total_chars) * 100:.2f}%")
+    # print(f"Adjusted Character Accuracy: {(correct_adjusted_chars / total_chars) * 100:.2f}%")
     print("="*40)
 
     plot_ten_samples(plot_samples)
