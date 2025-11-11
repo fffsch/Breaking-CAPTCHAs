@@ -4,8 +4,7 @@ import os
 from pathlib import Path
 import shutil
 
-# --- 1. Setup Directories ---
-BASE_DIR = Path("yolo_dataset3_mask") # Centralize output
+BASE_DIR = Path("yolo_dataset3_mask") 
 IMG_OUTPUT_DIR = BASE_DIR / "images/train"
 LABEL_OUTPUT_DIR = BASE_DIR / "labels/train"
 DEBUG_DIR = BASE_DIR / "debug_visuals"
@@ -17,17 +16,16 @@ for d in [IMG_OUTPUT_DIR, LABEL_OUTPUT_DIR, DEBUG_DIR, PROCESSED_DIR]:
         shutil.rmtree(d)
     d.mkdir(parents=True, exist_ok=True)
 
-# Source directory for your raw captcha images
+
 RAW_IMG_DIR = Path("images/train") 
 
-# --- 2. Define Class List ---
 CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
            'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
            'u', 'v', 'w', 'x', 'y', 'z']
 char_to_id = {char: idx for idx, char in enumerate(CLASSES)}
 
-# --- Helper Functions ---
+
 def to_yolo_format(img_w, img_h, x, y, w, h):
     # Clamp values to ensure they don't slightly exceed 1.0 due to rounding
     xc = max(0.0, min(1.0, (x + w / 2) / img_w))
@@ -37,10 +35,6 @@ def to_yolo_format(img_w, img_h, x, y, w, h):
     return xc, yc, nw, nh
 
 def merge_vertical_contours(rects, threshold_x=5):
-    """
-    Merges contours that are vertically aligned and close to each other.
-    Essential for 'i', 'j', ':', etc.
-    """
     if not rects:
         return []
         
@@ -80,7 +74,6 @@ def merge_vertical_contours(rects, threshold_x=5):
     return merged
 
 def create_color_mask(image, lower_bgr, upper_bgr):
-    # Define the lower and upper bounds
     lower_bound = np.array(lower_bgr, dtype=np.uint8)
     upper_bound = np.array(upper_bgr, dtype=np.uint8)
 
@@ -91,7 +84,6 @@ def create_color_mask(image, lower_bgr, upper_bgr):
 lower_black = (0, 0, 0)   # BGR for "000000"
 upper_black = (0, 0, 0)   # BGR for "000000"
 
-# --- 3. Main Processing Loop ---
 image_files = sorted(list(RAW_IMG_DIR.glob("*.png")))
 print(f"Starting strict processing of {len(image_files)} images...")
 
@@ -108,24 +100,22 @@ for img_path in image_files:
     img = cv2.imread(str(img_path))
     if img is None:
         continue
-        
+    
+    # Preprocessing
     line_mask = create_color_mask(img, lower_black, upper_black)
         
-    dilated_mask = cv2.dilate(line_mask, kernel, iterations=1)
+    # dilated_mask = cv2.dilate(line_mask, kernel, iterations=1)
 
-    inpainted_image = cv2.inpaint(img, dilated_mask, 3, cv2.INPAINT_TELEA)
+    inpainted_image = cv2.inpaint(img, line_mask, 3, cv2.INPAINT_TELEA)
     
     h_img, w_img, _ = img.shape
 
-    # --- Preprocessing ---
     gray = cv2.cvtColor(inpainted_image, cv2.COLOR_BGR2GRAY)
     # blur = cv2.medianBlur(gray, 3)
     
-    # Adaptive threshold to get a binary image
     thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
                                    cv2.THRESH_BINARY_INV, 11, 2)
-
-    # Continue with previous morphological operations on the cleaned threshold
+    
     # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
     # cleaned_thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
     cleaned_thresh = cv2.dilate(thresh, kernel, iterations=1)
@@ -137,14 +127,12 @@ for img_path in image_files:
     rects = []
     for c in contours:
         x, y, w, h = cv2.boundingRect(c)
-        # Filter: Must be tall enough (e.g., > 15% of image height) AND have reasonable area
+        # Filter: Must be tall enough and have reasonable area
         if h > (h_img * 0.15) and (w * h) > 30: 
              rects.append((x, y, w, h))
 
-    # --- Smart Merging ---
     rects = merge_vertical_contours(rects, threshold_x=5)
 
-    # --- STRICT VALIDATION ---
     if len(rects) != target_len:
         print(f"[Skip] {filename}: Found {len(rects)} contours, expected {target_len}")
         skipped_count += 1
@@ -152,7 +140,6 @@ for img_path in image_files:
 
     rects.sort(key=lambda x: x[0])
 
-    # --- Save Validated Data ---
     processed_count += 1
     
     shutil.copy(str(img_path), str(IMG_OUTPUT_DIR / filename))

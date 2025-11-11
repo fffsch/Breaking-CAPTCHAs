@@ -32,10 +32,10 @@ if __name__ == "__main__":
 
         line_mask = create_color_mask(img, lower_black, upper_black)
 
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        dilated_mask = cv2.dilate(line_mask, kernel, iterations=1)
+        # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        # dilated_mask = cv2.dilate(line_mask, kernel, iterations=1)
 
-        inpainted_image = cv2.inpaint(img, dilated_mask, 3, cv2.INPAINT_TELEA)
+        inpainted_image = cv2.inpaint(img, line_mask, 3, cv2.INPAINT_TELEA)
         
         clean_path = CLEAN_DIR / img_path
 
