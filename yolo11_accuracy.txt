@@ -2,3 +2,12 @@
 CAPTCHA Accuracy: 56.15%
 Character Accuracy: 77.79%
 ========================================
+
+
+Accuracy on pre-processed input images (line filtering); Adjusted = count both 0 and o as correct
+========================================
+CAPTCHA Accuracy: 58.60%
+ADJUSTED CAPTCHA Accuracy: 64.75%
+Character Accuracy: 79.22%
+Adjusted Character Accuracy: 80.24%
+========================================
