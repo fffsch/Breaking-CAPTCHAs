@@ -1,0 +1,6 @@
+========================================
+CAPTCHA Accuracy: 44.20%
+ADJUSTED CAPTCHA Accuracy: 49.55%
+Character Accuracy: 71.89%
+Adjusted Character Accuracy: 72.78%
+========================================
