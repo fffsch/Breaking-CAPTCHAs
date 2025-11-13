@@ -7,7 +7,7 @@ from pathlib import Path
 # === CONFIGURATION ===
 MODEL_PATH = 'runs/detect/captcha_yolo_v11/weights/best.pt'
 # MODEL_PATH = 'runs/detect/masked_training/weights/best.pt'
-TEST_DIR = Path('images/clean_test_processed')
+TEST_DIR = Path('../data/images/clean_test_processed')
 CONF_THRESHOLD = 0.5
 # =====================
 

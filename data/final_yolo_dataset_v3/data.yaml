@@ -1,4 +1,4 @@
-path: c:\Users\fvsch\OneDrive\Documents\Code\NUS\CV\MiniProject_CAPTCHA\CAPTCHA\final_yolo_dataset_v3
+path: C:/Users/fvsch/OneDrive/Documents/Code/NUS/CV/MiniProject_CAPTCHA/CAPTCHA/data/final_yolo_dataset_v3/data.yaml
 train: images/train
 val: images/val
 nc: 36

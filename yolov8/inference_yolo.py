@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 import random
 
-TEST_DIR = Path("images/test")
+TEST_DIR = Path("../data/images/test")
 
 # model = YOLO('runs_v1/detect/captcha_yolo_v87/weights/best.pt') #V1 - YOLOv8n
 # model = YOLO('runs/detect/captcha_yolo_v82/weights/best.pt') #V2

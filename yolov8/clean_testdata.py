@@ -3,7 +3,7 @@ import cv2
 import shutil
 from pathlib import Path
 
-BASE_DIR = Path("images")
+BASE_DIR = Path("../data/images")
 IMG_DIR = BASE_DIR / "test"
 CLEAN_DIR = BASE_DIR / "clean_test_processed"
 

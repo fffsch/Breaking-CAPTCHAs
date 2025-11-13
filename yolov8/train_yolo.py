@@ -17,7 +17,7 @@ from ultralytics import YOLO
 
 if __name__ == '__main__':
     model = YOLO('runs/detect/captcha_yolo_v11/weights/best.pt')
-    model.train(data='final_yolo_dataset_v3/data.yaml',
+    model.train(data='../data/final_yolo_dataset_v3/data.yaml',
                 epochs=50,
                 imgsz=640,
                 batch=-1,

@@ -4,11 +4,11 @@ import random
 import yaml
 from pathlib import Path
 
-SOURCE_IMG_DIR = Path("yolo_dataset3_mask/images/train")
-SOURCE_LABEL_DIR = Path("yolo_dataset3_mask/labels/train")
+SOURCE_IMG_DIR = Path("../data/yolo_dataset3_mask/images/train")
+SOURCE_LABEL_DIR = Path("../data/yolo_dataset3_mask/labels/train")
 
 # Destination path (where the final YOLO dataset will be created)
-DEST_BASE_DIR = Path("final_yolo_dataset_v3")
+DEST_BASE_DIR = Path("../data/final_yolo_dataset_v4")
 
 SPLIT_RATIO = 0.8
 

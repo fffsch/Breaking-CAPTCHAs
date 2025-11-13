@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import shutil
 
-BASE_DIR = Path("yolo_dataset3_mask") 
+BASE_DIR = Path("../data/yolo_dataset3_mask") 
 IMG_OUTPUT_DIR = BASE_DIR / "images/train"
 LABEL_OUTPUT_DIR = BASE_DIR / "labels/train"
 DEBUG_DIR = BASE_DIR / "debug_visuals"
@@ -17,7 +17,7 @@ for d in [IMG_OUTPUT_DIR, LABEL_OUTPUT_DIR, DEBUG_DIR, PROCESSED_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
 
-RAW_IMG_DIR = Path("images/train") 
+RAW_IMG_DIR = Path("../data/images/train") 
 
 CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',

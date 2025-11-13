@@ -5,8 +5,7 @@ import numpy as np
 
 # --- 1. Configuration ---
 MODEL_PATH = 'runs/detect/captcha_yolo_v8/weights/best.pt'
-# --- >> CHANGE THIS to one of your test images
-IMAGE_PATH = 'images/test/03yuav5-0.png' 
+IMAGE_PATH = '../data/images/test/03yuav5-0.png' 
 
 # Slicer settings:
 # Adjust (128, 128) based on your captcha size. 

@@ -3,7 +3,7 @@ import cv2
 
 from pathlib import Path
 
-img_path = Path("images/test/0col7w-0.png")
+img_path = Path("../data/images/test/0col7w-0.png")
 img = cv2.imread(str(img_path))
 
 label_text = img_path.stem.split("-")[0].lower() 
